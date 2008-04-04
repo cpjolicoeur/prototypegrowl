@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Window.Growl 2.0</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" charset="utf-8" src="prototype-1.6.0.2.js"></script>
+<script type="text/javascript" charset="utf-8" src="growl.js"></script>
+<link rel="stylesheet" href="http://icebeat.bitacoras.com/mootools/growl/css.css" type="text/css" />
+</head>
+<body>
+	<h3><img src="http://icebeat.bitacoras.com/mootools/growl/logo.jpg" alt="Window.Growl 2.0" title="Window.Growl 2.0"></h3>
+	<ul>
+		<li><a href="#" id="smoke" title="Show msg Smoke">Show Growl Smoke.</a></li>
+		<li><a href="#" id="bezel" title="Show msg Bezel">Show Growl Bezel.</a></li>
+		<li><a href="growl.js" title="Download">Download js.</a></li>
+	</ul>
+	<pre><code>Growl.Smoke({
+	title: &apos;Window.Growl By Daniel Mota&apos;,
+	text: &apos;http://icebeat.bitacoras.com&apos;,
+	image: &apos;growl.jpg&apos;,
+	duration: 2
+});</code></pre>
+	<p>
+		By <a href="http://icebeat.bitacoras.com" title="Blog">Daniel Mota</a>.
+	</p>
+	<script type="text/javascript" charset="utf-8">
+		var growl = new Growl.Smoke;
+    $('smoke').observe('click', function(event) {
+      growl.show();
+			event.stop();
+		});
+		
+		$('bezel').observe('click', function(event) {
+			var growl = new Growl.Bezel;
+			growl.show({
+				title: 'Window.Growl<br />By Daniel Mota'
+			});
+			event.stop();
+		});
+	</script>
+</body>
+</html>

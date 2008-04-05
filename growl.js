@@ -31,7 +31,8 @@ Growl.Base = Class.create({
 		title:   'Default popup title',
 		text:    'Lorem ipsum, whatever',
 		autohide: 2,
-		animated: 0.75
+		animated: 0.75,
+		opacity: 1
 	},
 	
 	initialize: function(background) {
@@ -51,6 +52,7 @@ Growl.Base = Class.create({
 			background: 'url(' + this.background + ') no-repeat'
 		}, this.styles.div || {}));
 		document.body.insert({ bottom: block_elem });
+		block_elem.setOpacity(this.options.opacity);
 		
 		$A([
 			new Element('img').setStyle(this.styles.img), 

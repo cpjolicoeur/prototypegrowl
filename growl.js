@@ -5,7 +5,7 @@ Growl.Base = Class.create({
 		image: 'growl.jpg',
 		title: 'protoGrowl by Craig P Jolicoeur',
 		text: 'http://craigjolicoeur.com/pgrowl',
-		duration: 2
+		duration: 4
 	},
 	
 	initialize: function(background) {
@@ -77,6 +77,6 @@ Growl.Smoke = Class.create(Growl.Base, {
 	hide: function($super) {
 		var elem = this.queue.shift();
 		$super(elem);
-		// elem.remove();
+		// elem.remove(); TODO: we do need to remove the div when we are done
 	}
 });

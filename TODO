@@ -1,0 +1,6 @@
+* Make sure growl divs are removed when they are finished.
+
+* Allow user to specify whether or not to use Scriptaculous effects
+
+* If using Effects, do a sanity check to make sure the needed libraries
+are included.

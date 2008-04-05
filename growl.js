@@ -1,15 +1,15 @@
-/*  Window.Growl, version 2.0: http://icebeat.bitacoras.com
- *  Daniel Mota aka IceBeat <daniel.mota@gmail.com>
+/*  Growl for Prototype
+ *  Thomas Reynolds <tdreyno@gmail.com>
 --------------------------------------------------------------------------*/
 var Growl = {};
 
 Growl.Base = Class.create({
-	
 	options: {
-		image: 'http://www.icebeat.bitacoras.com/public/mootools/growl/growl.jpg',
-		title: 'Window.Growl by Daniel Mota',
-		text: 'http://icebeat.bitacoras.com',
-		duration: 2
+		image:   'growl.jpg',
+		title:   'Default popup title',
+		text:    'Lorem ipsum, whatever',
+		autohide: 2,
+		animated: 0.75
 	},
 	
 	initialize: function(background) {
@@ -23,7 +23,7 @@ Growl.Base = Class.create({
 	create: function() {
 		var block_elem = new Element('div').hide().setStyle(Object.extend({
 			position:   'absolute',
-			'z-index':  '999',
+			zIndex:     '999',
 			color:      '#fff',
 			font:       '12px/14px "Lucida Grande", Arial, Helvetica, Verdana, sans-serif',
 			background: 'url(' + this.background + ') no-repeat'
@@ -42,38 +42,51 @@ Growl.Base = Class.create({
 	},
 	
 	show: function(block_elem, options) {
-		block_elem.show();
-		this.hide.bind(this).delay(options.duration);
+		if (this.options.animated)
+			new Effect.Appear(block_elem, { duration: this.options.animated });
+		else
+			block_elem.show();
+		
+		if (this.options.autohide)
+			this.hide.bind(this).delay(options.autohide);
+		else
+			block_elem.observe('click', this.hide.bindAsEventListener(this));
 	},
 	
 	hide: function(elem) {
-		elem.hide();
+		if (this.options.animated)
+			new Effect.Fade(elem, { duration: this.options.animated });
+		else {
+			elem.hide();
+			elem.remove();
+		}
 	}
-	
 });
 
 Growl.Smoke = Class.create(Growl.Base, {
 	initialize: function($super) {
 		this.queue = [];
-		$super(arguments[1] || 'http://www.icebeat.bitacoras.com/public/mootools/growl/smoke.png', {
-			div: { width: '298px', height: '73px' },
-			img: { float: 'left', margin: '12px;' },
+		this.from_top = 0;
+		$super(arguments[1] || 'smoke.png', {
+			div: { width: '298px', height: '73px', right: '10px' },
+			img: { float: 'left', margin: '12px' },
 			h3:  { margin: 0, padding: '10px 0', 'font-size': '13px' },
 			p:   { margin: '0 10px', 'font-size': '12px' }
 		});
 	},
 	
 	show: function($super) {
-		var options  = Object.extend(this.options, arguments[0] || {});
+		var options  = Object.extend(this.options, arguments[1] || {});
 		block_elem = this.create();
 		
-		var delta = document.viewport.getScrollOffsets()[1]+10+((this.queue.length)*83);
-		block_elem.setStyle({ 'top':delta+'px', 'right':'10px', 'display':'block'});
+		var delta = document.viewport.getScrollOffsets()[1] + 10 + this.from_top;
+		block_elem.setStyle({ top: delta+'px' });
 		
 		block_elem.down('img').setAttribute('src', options.image);
 		block_elem.down('h3').update(options.title);
 		block_elem.down('p').update(options.text);
 		
+		this.from_top += 83;
 		this.queue.push(block_elem);
 		$super(block_elem, options);
 	},
@@ -81,12 +94,14 @@ Growl.Smoke = Class.create(Growl.Base, {
 	hide: function($super) {
 		var elem = this.queue.shift();
 		$super(elem);
-		elem.remove();
+		
+		if (this.queue.length == 0)
+			this.from_top = 0;
 	}
 });
 
-/*Gr0wl.Bezel = Class.create(Gr0wl.Base, {
-	
+/*
+Gr0wl.Bezel = Class.create(Gr0wl.Base, {
 	create: function() {
 		this.i=0;
 		this.parent({
@@ -115,7 +130,7 @@ Growl.Smoke = Class.create(Growl.Base, {
 		this.i--;
 		this.callChain();
 	}
-	
 });
 
-Gr0wl.Bezel.implement(new Chain);*/
+Gr0wl.Bezel.implement(new Chain);
+*/

@@ -34,54 +34,36 @@ Growl.Base = Class.create({
 		animated: 0.75
 	},
 	
-	initialize: function(background) {
-		this.background = background;
-		this.styles     = arguments[1] || {};
+	create: function(class_names) {
+		var elem = new Element('div', { class: class_names }).hide();
+		elem.insert({ bottom: new Element('img') });
+		elem.insert({ bottom: new Element('h3') });
+		elem.insert({ bottom: new Element('p') });
+		document.body.insert({ bottom: elem });
 		
-		var image = new Image;
-		image.src = this.background;
+		return elem;
 	},
 	
-	create: function() {
-		var block_elem = new Element('div').hide().setStyle(Object.extend({
-			position:   'absolute',
-			zIndex:     '999',
-			color:      '#fff',
-			font:       '12px/14px "Lucida Grande", Arial, Helvetica, Verdana, sans-serif',
-			background: 'url(' + this.background + ') no-repeat'
-		}, this.styles.div || {}));
-		document.body.insert({ bottom: block_elem });
-		
-		$A([
-			new Element('img').setStyle(this.styles.img), 
-			new Element('h3').setStyle(this.styles.h3),
-			new Element('p').setStyle(this.styles.p) 
-		]).each(function(elem) {
-			block_elem.insert({ bottom: elem });
-		}.bind(this));
-		
-		return block_elem;
-	},
-	
-	show: function(block_elem, options) {
+	show: function(elem, options) {
 		if (this.options.animated)
-			new Effect.Appear(block_elem, { duration: this.options.animated });
+			new Effect.Appear(elem, { duration: this.options.animated });
 		else
-			block_elem.show();
+			elem.show();
 		
 		if (this.options.autohide)
-			this.hide.bind(this).delay(options.autohide);
-		else
-			block_elem.observe('click', this.hide.bindAsEventListener(this));
+			this.hide.bind(this, elem).delay(options.autohide);
+		else {
+			elem.observe('click', function(event) {
+				this.hide(event.findElement('div'));
+			}.bindAsEventListener(this));
+		}
 	},
 	
 	hide: function(elem) {
 		if (this.options.animated) {
 			new Effect.Fade(elem, { 
-				duration: this.options.animated, 
-				afterFinishInternal: function(effect) {
-					effect.element.remove();
-				}
+				duration:            this.options.animated, 
+				afterFinishInternal: elem.remove.bind(elem)
 			})
 		} else
 			elem.remove();
@@ -90,38 +72,32 @@ Growl.Base = Class.create({
 
 Growl.Smoke = Class.create(Growl.Base, {
 	initialize: function($super) {
-		this.queue = [];
+		this.cache = $H({});
 		this.from_top = 0;
-		$super(arguments[1] || 'smoke.png', {
-			div: { width: '298px', height: '73px', right: '10px' },
-			img: { float: 'left', margin: '12px' },
-			h3:  { margin: 0, padding: '10px 0', 'font-size': '13px' },
-			p:   { margin: '0 10px', 'font-size': '12px' }
-		});
 	},
 	
 	show: function($super) {
 		var options  = Object.extend(this.options, arguments[1] || {});
-		block_elem = this.create();
+		var elem = this.create(options.class_names || 'growl-smoke');
 		
-		var delta = document.viewport.getScrollOffsets()[1] + 10 + this.from_top;
-		block_elem.setStyle({ top: delta+'px' });
+		var delta = document.viewport.getScrollOffsets()[1] + this.from_top;
+		elem.setStyle({ top: delta+'px' });
 		
-		block_elem.down('img').setAttribute('src', options.image);
-		block_elem.down('h3').update(options.title);
-		block_elem.down('p').update(options.text);
+		elem.down('img').setAttribute('src', options.image);
+		elem.down('h3').update(options.title);
+		elem.down('p').update(options.text);
 		
-		this.from_top += 83;
-		this.queue.push(block_elem);
-		$super(block_elem, options);
+		this.from_top += elem.getHeight();
+		this.cache.set(elem.identify(), true);
+		
+		$super(elem, options);
 	},
 	
-	hide: function($super) {
-		var elem = this.queue.shift();
+	hide: function($super, elem) {
 		$super(elem);
-		// elem.remove(); TODO: we do need to remove the div when we are done
+		this.cache.unset(elem.identify());
 		
-		if (this.queue.length == 0)
+		if (this.cache.keys().length == 0)
 			this.from_top = 0;
 	}
 });

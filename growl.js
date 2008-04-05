@@ -2,9 +2,9 @@ var Growl = {};
 Growl.Base = Class.create({
 	
 	options: {
-		image: 'http://www.icebeat.bitacoras.com/public/mootools/growl/growl.jpg',
-		title: 'Window.Growl by Daniel Mota',
-		text: 'http://icebeat.bitacoras.com',
+		image: 'growl.jpg',
+		title: 'protoGrowl by Craig P Jolicoeur',
+		text: 'http://craigjolicoeur.com/pgrowl',
 		duration: 2
 	},
 	
@@ -43,7 +43,7 @@ Growl.Base = Class.create({
 	},
 	
 	hide: function(elem) {
-		Effect.Fade(elem);
+		Effect.Fade(elem, {queue: 'end'});
 	}
 	
 });
@@ -51,7 +51,7 @@ Growl.Base = Class.create({
 Growl.Smoke = Class.create(Growl.Base, {
 	initialize: function($super) {
 		this.queue = [];
-		$super(arguments[1] || 'http://www.icebeat.bitacoras.com/public/mootools/growl/smoke.png', {
+		$super(arguments[1] || 'smoke.png', {
 			div: { width: '298px', height: '73px' },
 			img: { float: 'left', margin: '12px;' },
 			h3:  { margin: 0, padding: '10px 0', 'font-size': '13px' },
@@ -77,6 +77,6 @@ Growl.Smoke = Class.create(Growl.Base, {
 	hide: function($super) {
 		var elem = this.queue.shift();
 		$super(elem);
-		//elem.remove();
+		// elem.remove();
 	}
 });

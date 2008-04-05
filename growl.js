@@ -35,7 +35,7 @@ Growl.Base = Class.create({
 	},
 	
 	create: function(class_names) {
-		var elem = new Element('div', { class: class_names }).hide();
+		var elem = new Element('div', { 'class': class_names }).hide();
 		elem.insert({ bottom: new Element('img') });
 		elem.insert({ bottom: new Element('h3') });
 		elem.insert({ bottom: new Element('p') });
@@ -71,10 +71,8 @@ Growl.Base = Class.create({
 });
 
 Growl.Smoke = Class.create(Growl.Base, {
-	initialize: function($super) {
-		this.cache = $H({});
-		this.from_top = 0;
-	},
+	cache:    $H({}),
+	from_top: 0,
 	
 	show: function($super) {
 		var options  = Object.extend(this.options, arguments[1] || {});

@@ -38,12 +38,12 @@ Growl.Base = Class.create({
 	},
 	
 	show: function(block_elem, options) {
-		block_elem.show();
+		Effect.Appear(block_elem.identify());
 		this.hide.bind(this).delay(options.duration);
 	},
 	
 	hide: function(elem) {
-		elem.hide();
+		Effect.Fade(elem);
 	}
 	
 });
@@ -64,7 +64,7 @@ Growl.Smoke = Class.create(Growl.Base, {
 		block_elem = this.create();
 		
 		var delta = document.viewport.getScrollOffsets()[1]+10+((this.queue.length)*83);
-		block_elem.setStyle({ 'top':delta+'px', 'right':'10px', 'display':'block'});
+		block_elem.setStyle({ 'top':delta+'px', 'right':'10px'});
 		
 		block_elem.down('img').setAttribute('src', options.image);
 		block_elem.down('h3').update(options.title);
@@ -77,6 +77,6 @@ Growl.Smoke = Class.create(Growl.Base, {
 	hide: function($super) {
 		var elem = this.queue.shift();
 		$super(elem);
-		elem.remove();
+		//elem.remove();
 	}
 });

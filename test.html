@@ -5,13 +5,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="text/javascript" charset="utf-8" src="prototype-1.6.0.2.js"></script>
 <script type="text/javascript" charset="utf-8" src="growl.js"></script>
+<script type="text/javascript" charset="utf-8" src="scriptaculous.js"></script>
+<script type="text/javascript" charset="utf-8" src="effects.js"></script>
 <link rel="stylesheet" href="http://icebeat.bitacoras.com/mootools/growl/css.css" type="text/css" />
 </head>
 <body>
 	<h3><img src="http://icebeat.bitacoras.com/mootools/growl/logo.jpg" alt="Window.Growl 2.0" title="Window.Growl 2.0"></h3>
 	<ul>
 		<li><a href="#" id="smoke" title="Show msg Smoke">Show Growl Smoke.</a></li>
-		<li><a href="#" id="bezel" title="Show msg Bezel">Show Growl Bezel.</a></li>
+		<li><a href="#" id="bezel" title="Show msg Bezel">Show Growl Bezel.</a> <b>(NOT WORKING YET)</b></li>
 		<li><a href="growl.js" title="Download">Download js.</a></li>
 	</ul>
 	<pre><code>Growl.Smoke({
@@ -23,6 +25,7 @@
 	<p>
 		By <a href="http://icebeat.bitacoras.com" title="Blog">Daniel Mota</a>.
 	</p>
+
 	<script type="text/javascript" charset="utf-8">
 		var growl = new Growl.Smoke;
     $('smoke').observe('click', function(event) {

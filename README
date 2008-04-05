@@ -1,6 +1,6 @@
 == Description == 
 
-protoGrowl is an implementation of the Mac OS X Growl notification system 
+prototypeGrowl is an implementation of the Mac OS X Growl notification system 
 using the Prototype javascript library.
 
 

@@ -4,23 +4,50 @@
 <title>Window.Growl 2.0</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="text/javascript" charset="utf-8" src="prototype-1.6.0.2.js"></script>
-<script type="text/javascript" charset="utf-8" src="growl.js"></script>
-<script type="text/javascript" charset="utf-8" src="scriptaculous.js"></script>
 <script type="text/javascript" charset="utf-8" src="effects.js"></script>
-<link rel="stylesheet" href="http://icebeat.bitacoras.com/mootools/growl/css.css" type="text/css" />
+<script type="text/javascript" charset="utf-8" src="growl.js"></script>
+<style type="text/css" media="screen">
+  * {
+  	margin: 0;
+  	padding: 0; }
+
+  body {
+  	margin:50px;
+  	font: 13px/14px "Lucida Grande", Arial, Helvetica, Verdana, sans-serif; }
+
+  a {
+  	color:#666; }
+
+  a:hover {
+  	text-decoration:none; }
+
+  ul, li {
+  	margin:10px; }
+
+  pre {
+  	width:450px;
+  	background-color:#0C1021;
+  	padding:20px;
+  	margin:25px 0px; }
+
+  code {
+  	color:#7D93B8;
+  	font: 12px/13px Monaco, Courier, monospace; }
+</style>
 </head>
 <body>
-	<h3><img src="http://icebeat.bitacoras.com/mootools/growl/logo.jpg" alt="Window.Growl 2.0" title="Window.Growl 2.0"></h3>
+	<h3><img src="logo.jpg" alt="Window.Growl 2.0" title="Window.Growl 2.0"></h3>
 	<ul>
 		<li><a href="#" id="smoke" title="Show msg Smoke">Show Growl Smoke.</a></li>
 		<li><a href="#" id="bezel" title="Show msg Bezel">Show Growl Bezel.</a> <b>(NOT WORKING YET)</b></li>
 		<li><a href="growl.js" title="Download">Download js.</a></li>
 	</ul>
 	<pre><code>Growl.Smoke({
-	title: &apos;Window.Growl By Daniel Mota&apos;,
-	text: &apos;http://icebeat.bitacoras.com&apos;,
-	image: &apos;growl.jpg&apos;,
-	duration: 2
+	title:    &apos;Window.Growl By Daniel Mota&apos;,
+	text:     &apos;http://icebeat.bitacoras.com&apos;,
+	image:    &apos;growl.jpg&apos;,
+	autohide: 2,
+	animated: 0.75
 });</code></pre>
 	<p>
 		By <a href="http://www.craigjolicoeur.com" title="Blog">Craig P Jolicoeur</a>.
@@ -29,17 +56,21 @@
 	<script type="text/javascript" charset="utf-8">
 		var growl = new Growl.Smoke;
     $('smoke').observe('click', function(event) {
-      growl.show();
+      growl.show({
+        image: 'http://www.gravatar.com/avatar.php?gravatar_id=a4c4bd782c415f9ec93fe11e5694bf06&rating=PG&size=48',
+        title: 'Hey look, it&rsquo;s me!',
+        autohide: 0
+      });
 			event.stop();
 		});
 		
-		$('bezel').observe('click', function(event) {
-			var growl = new Growl.Bezel;
-			growl.show({
-				title: 'Window.Growl<br />By Daniel Mota'
-			});
-			event.stop();
-		});
+    // $('bezel').observe('click', function(event) {
+    //  var growl = new Growl.Bezel;
+    //  growl.show({
+    //    title: 'Window.Growl<br />By Daniel Mota'
+    //  });
+    //  event.stop();
+    // });
 	</script>
 </body>
 </html>

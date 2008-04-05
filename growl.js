@@ -1,4 +1,4 @@
-// Growl for Prototype
+// prototypeGrowl - Growl for Prototype
 //
 // Thomas Reynolds <tdreyno@gmail.com - http://github.com/tdreyno>
 // Craig P Jolicoeur <cpjolicoeur@gmail.com - http://github.com/cpjolicoeur>
@@ -23,6 +23,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 // --------------------------------------------------------------------------
+
 var Growl = {};
 Growl.Base = Class.create({
 	options: {
@@ -121,3 +122,38 @@ Growl.Smoke = Class.create(Growl.Base, {
 			this.from_top = 0;
 	}
 });
+
+/*
+Gr0wl.Bezel = Class.create(Gr0wl.Base, {
+	create: function() {
+		this.i=0;
+		this.parent({
+			div: 'width:211px;height:206px;text-align:center;',
+			img: 'margin-top:25px;',
+			h3: 'margin:0;padding:0px;padding-top:22px;font-size:14px;',
+			p: 'margin:15px;font-size:12px;'
+		});
+	},
+	
+	show: function(options) {
+		var top = window.getScrollTop()+(window.getHeight()/2)-105,
+		left = window.getScrollLeft()+(window.getWidth()/2)-103;
+		options.position = {'top':top+'px', 'left':left+'px', 'display':'block'};
+		this.i++;
+		this.chain(this.parent.pass(options,this));
+		if(this.i==1) this.callChain();
+	},
+	
+	hide: function(elements) {
+		this.queue.delay(400,this);
+		this.parent(elements, { 'opacity': 0, 'margin-top': [0,50] });
+	},
+	
+	queue: function() {
+		this.i--;
+		this.callChain();
+	}
+});
+
+Gr0wl.Bezel.implement(new Chain);
+*/

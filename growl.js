@@ -79,7 +79,6 @@ Growl.Base = Class.create({
 		if (this.options.animated)
 			new Effect.Fade(elem, { duration: this.options.animated });
 		else {
-			elem.hide();
 			elem.remove();
 		}
 	}

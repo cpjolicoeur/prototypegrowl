@@ -13,3 +13,10 @@ Craig P Jolicoeur <cpjolicoeur@gmail.com - http://github.com/cpjolicoeur>
 == Usage ==
 
 ...coming soon...
+
+
+== TODO ==
+
+* Make sure growl divs are removed when they are finished.
+* If using Effects, do a sanity check to make sure the needed libraries
+are included.

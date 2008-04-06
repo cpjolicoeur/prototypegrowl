@@ -12,7 +12,29 @@ Craig P Jolicoeur <cpjolicoeur@gmail.com - http://github.com/cpjolicoeur>
 
 == Usage ==
 
-...coming soon...
+to create a new growl use the following code:
+
+var growl = new Growl.Smoke;
+growl.show({option: value});
+
+The following option:value pairs can be set:
+
+image: 		'path to image file to use in growl bubble' 
+title: 		'title of growl bubble'
+content:	'message for growl bubble'
+autohide:	time in seconds to display the growl bubble (set to 0 to keep visible until clicked)
+animated:	time in seconds of fade in / fade out animation (set to 0 to prevent animation)
+opacity:	value from 0 - 1 of opacity of growl bubble
+
+
+== Misc ==
+
+Much thanks to the following javascript growl implementations for ideas and inspiration:
+
+Window.Growl (mootools) - http://icebeat.bitacoras.com/mootools/growl/
+protoGrowl (prototype)  - http://www.midgard-project.org/documentation/protogrowl
+Growl (jquery)          - http://alexsancho.name/archives/2006/11/windowgrowl-con-jquery/
+yowl (YUI)              - http://code.google.com/p/yowl/
 
 
 == TODO ==

@@ -78,16 +78,15 @@ Growl.Base = Class.create({
 	},
 	
 	hide: function(elem) {
-		if (this.options.animated)
+		if (this.options.animated) {
 			new Effect.Fade(elem, { 
 				duration: this.options.animated, 
 				afterFinishInternal: function(effect) {
 					effect.element.remove();
 				}
 			})
-		else {
+		} else
 			elem.remove();
-		}
 	}
 });
 

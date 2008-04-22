@@ -40,7 +40,7 @@ Growl.Base = Class.create({
 		elem.insert({ bottom: new Element('img') });
 		elem.insert({ bottom: new Element('h3') });
 		elem.insert({ bottom: new Element('p') });
-		document.body.insert({ bottom: elem });
+		$(document.body).insert({ bottom: elem });
 		elem.setOpacity(this.options.opacity);
 		
 		return elem;

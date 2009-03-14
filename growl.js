@@ -32,6 +32,7 @@ Growl.Base = Class.create({
 		text:    'Lorem ipsum, whatever',
 		autohide: 2,
 		animated: 0.75,
+    animation: { show: Effect.Appear, hide: Effect.Fade },
 		opacity: 1
 	},
 	
@@ -47,8 +48,8 @@ Growl.Base = Class.create({
 	},
 	
 	show: function(elem, options) {
-		if (this.options.animated)
-			new Effect.Appear(elem, { duration: this.options.animated });
+		if ( this.options.animated && this.options.animation.show )
+      new this.options.animation.show( elem, { duration: this.options.animated } );
 		else
 			elem.show();
 		
@@ -62,11 +63,11 @@ Growl.Base = Class.create({
 	},
 	
 	hide: function(elem) {
-		if (this.options.animated) {
-			new Effect.Fade(elem, { 
+		if ( this.options.animated && this.options.animation.hide ) {
+			new this.options.animation.hide( elem, { 
 				duration:            this.options.animated, 
 				afterFinishInternal: elem.remove.bind(elem)
-			})
+			} )
 		} else
 			elem.remove();
 	}
@@ -102,37 +103,44 @@ Growl.Smoke = Class.create(Growl.Base, {
 	}
 });
 
-/*
-Gr0wl.Bezel = Class.create(Gr0wl.Base, {
-	create: function() {
-		this.i=0;
-		this.parent({
-			div: 'width:211px;height:206px;text-align:center;',
-			img: 'margin-top:25px;',
-			h3: 'margin:0;padding:0px;padding-top:22px;font-size:14px;',
-			p: 'margin:15px;font-size:12px;'
-		});
+Growl.Bezel = Class.create(Growl.Base, {
+	cache:    $H({}),
+	queue:    $A({}),
+	from_top: 0,
+
+	show: function($super) {
+		if (this.cache.keys().length == 0) {
+			this.options.animation.hide = Effect.DropOut;
+	
+			var options  = Object.extend(this.options, arguments[1] || {});
+			var elem = this.create(options.class_names || 'growl-bezel');
+		
+			var offsets = document.viewport.getDimensions();
+			var top = (offsets['height']/2)-105;
+			var left = (offsets['width']/2)-103;
+			elem.setStyle({ top: top+'px', left: left+'px' });
+		
+			elem.down('img').setAttribute('src', options.image);
+			elem.down('h3').update(options.title);
+			elem.down('p').update(options.text);
+		
+			this.cache.set(elem.identify(), true);
+		
+			$super(elem, options);			
+		} else {
+			this.queue.push(arguments[1] || {});
+		}
 	},
 	
-	show: function(options) {
-		var top = window.getScrollTop()+(window.getHeight()/2)-105,
-		left = window.getScrollLeft()+(window.getWidth()/2)-103;
-		options.position = {'top':top+'px', 'left':left+'px', 'display':'block'};
-		this.i++;
-		this.chain(this.parent.pass(options,this));
-		if(this.i==1) this.callChain();
-	},
-	
-	hide: function(elements) {
-		this.queue.delay(400,this);
-		this.parent(elements, { 'opacity': 0, 'margin-top': [0,50] });
-	},
-	
-	queue: function() {
-		this.i--;
-		this.callChain();
+	hide: function($super, elem) {
+		$super(elem);
+		this.cache.unset(elem.identify());
+		
+		if (this.queue.length > 0) {
+			var options = this.queue.first();
+			this.queue = this.queue.without(options);
+			this.show.bind(this, options).delay(0.5);
+		}
+			
 	}
 });
-
-Gr0wl.Bezel.implement(new Chain);
-*/

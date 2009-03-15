@@ -1,7 +1,9 @@
 // prototypeGrowl - Growl for Prototype
 //
-// Thomas Reynolds <tdreyno@gmail.com - http://github.com/tdreyno>
 // Craig P Jolicoeur <cpjolicoeur@gmail.com - http://github.com/cpjolicoeur>
+// Thomas Reynolds <tdreyno@gmail.com - http://github.com/tdreyno>
+//
+// Version: 1.0
 // 
 // Copyright (c) 2008 Thomas Reynolds, Craig P Jolicoeur
 // 

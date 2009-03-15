@@ -37,6 +37,11 @@ The following option:value pairs can be set with both Growl.Smoke and Growl.Beze
     opacity:	value from 0 - 1 of opacity of growl bubble
 
 
+== Demo ==
+
+A full demonstration page is available at http://craigjolicoeur.com/projects/prototypegrowl/
+
+
 == Contributors ==
 
 Sebastian Ryszard Kruk - Growl.Bezel support
@@ -54,5 +59,4 @@ yowl (YUI)              - http://code.google.com/p/yowl/
 
 == TODO ==
 
-* If using Effects, do a sanity check to make sure the needed libraries
-are included.
+* If using Effects, do a sanity check to make sure the needed libraries are included.
